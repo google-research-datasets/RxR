@@ -305,3 +305,7 @@ create an issue in this repository. This is the fastest way to reach us.
 
 If you would like to share feedback or report concerns, please email us at
 rxrvln@google.com.
+
+## License
+
+The Matterport3D dataset is governed by the [Matterport3D Terms of Use](http://dovahkiin.stanford.edu/matterport/public/MP_TOS.pdf). RxR annotations are released under the CC-BY license.
