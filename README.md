@@ -20,7 +20,7 @@ run the standard VLN setup.
 
 The RxR dataset is described in [Room-Across-Room: Multilingual
 Vision-and-Language Navigation with Dense Spatiotemporal
-Grounding](https://github.com/google-research-datasets/RxR).
+Grounding](https://arxiv.org/abs/2010.07954).
 
 Bibtex:
 
@@ -43,6 +43,11 @@ run:
 ```bash
 gsutil -m cp -R gs://rxr-data .
 ```
+
+Using `-m` gsutil downloads using multi-threading and multi-processing, using a
+number of threads and processors determined by the `parallel_thread_count` and
+`parallel_process_count` values set in the boto configuration file. You might
+want to experiment with these values for the fastest download.
 
 Alternatively, see the instructions below for downloading separate components of
 the dataset.
@@ -81,6 +86,7 @@ Field descriptions:
 *   `path`: A sequence of panoramic viewpoints along the path.
 *   `heading`: The initial heading in radians. Following R2R, the heading angle
     is zero facing the y-axis with z-up, and increases by turning right.
+*   `instruction`: The navigation instruction.
 *   `timed_instruction`: A sequence of time-aligned words in the instruction:
     *   `word`: The aligned utterance.
     *   `start_time`: The start of the time span, w.r.t. the recording.
@@ -261,8 +267,9 @@ Where `split` is one of `rxr_train`, `rxr_val_seen`, `rxr_val_unseen`.
 
 [Multilingual Cased BERT](https://tfhub.dev/tensorflow/bert_multi_cased_L-12_H-768_A-12/2)
 features for the instructions, and cross-translations thereof, are provided
-solely for convenience. Cross-translations are generated via the Google Cloud
-[Translation](https://cloud.google.com/translate/) API.
+solely for convenience. Cross-translations (e.g., `en` -> `hi`, `te`) are
+generated via the Google Cloud
+[Translation](https://cloud.google.com/translate/) API and are included as well.
 
 Data schema:
 
@@ -308,4 +315,6 @@ rxrvln@google.com.
 
 ## License
 
-The Matterport3D dataset is governed by the [Matterport3D Terms of Use](http://dovahkiin.stanford.edu/matterport/public/MP_TOS.pdf). RxR annotations are released under the CC-BY license.
+The Matterport3D dataset is governed by the
+[Matterport3D Terms of Use](http://dovahkiin.stanford.edu/matterport/public/MP_TOS.pdf).
+RxR annotations are released under the CC-BY license.
