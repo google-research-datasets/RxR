@@ -316,5 +316,5 @@ rxrvln@google.com.
 ## License
 
 The Matterport3D dataset is governed by the
-[Matterport3D Terms of Use](http://dovahkiin.stanford.edu/matterport/public/MP_TOS.pdf).
+[Matterport3D Terms of Use](http://kaldir.vc.in.tum.de/matterport/MP_TOS.pdf).
 RxR annotations are released under the CC-BY license.
