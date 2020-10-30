@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script src="https://gstatic.com/external_hosted/threejs-r108/three.js"></script>
+  <script src="https://gstatic.com/external_hosted/threejs-r108/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://gstatic.com/external_hosted/threejs-r108/examples/js/loaders/MTLLoader.js"></script>
+  <script src="https://gstatic.com/external_hosted/threejs-r108/examples/js/loaders/OBJLoader.js"></script>
+</head>
+<body style="font-family: sans-serif;">
+  <h1>First-Person Perspective</h1>
+  <p>Press space to play and pause the video.</p>
+  <h2>Pose Trace</h2>
+  <canvas id="canvas" width="640" height="480"></canvas>
+  <h2>Instruction</h2>
+  <div id="sentence" style="text-align: justify; width: 640px;"></div>
+</body>
+<script>
+  async function main() {
+    const renderer = new THREE.WebGLRenderer({'canvas': $('#canvas')[0]});
+    const camera = new THREE.PerspectiveCamera();
+    const scene = new THREE.Scene();
+
+    scene.background = new THREE.Color(0xffffff);
+    scene.add(new THREE.AmbientLight());
+
+    // Matterport3D uses a z-up system, while THREE uses a y-up system.
+    const zUp = new THREE.Group();
+    zUp.rotation.x = -Math.PI / 2;
+    scene.add(zUp);
+
+    let isPlayable = false;
+    let isPlaying = false;
+    $(document).on('keypress', e => {
+      if (!isPlayable || e.key !== ' ') return;
+      if (isPlaying) {
+        isPlaying = false;
+        pause();
+      } else {
+        isPlaying = true;
+        play();
+      }
+    });
+
+    const root = ''
+    // const audio = new Audio(root + 'audio.mp3');
+    // $(audio).on('ended', () => {
+    //   if (isPlaying) {
+    //     isPlaying = false;
+    //     pause();
+    //   }
+    //   elapsedTime = 0;
+    //   audio.currentTime = 0;
+    //   update();
+    // });
+
+    const args = await $.getJSON(root + 'args.json');
+    args['pose_trace'][0]['time'] = 0;
+    args['timed_instruction'].forEach(x => {
+      const span = $(`<tt>${x['word']} </tt>`);
+      span.hover(() => span.css('color', 'red'), () => span.css('color', ''))
+      span.on('click', () => {
+        if (!isPlayable) return;
+        elapsedTime = x['start_time'] + 0.1;
+        // audio.currentTime = elapsedTime;
+        update();
+      });
+
+      $('#sentence').append(span);
+      x['span'] = span;
+    });
+
+    const mtlLoader = new THREE.MTLLoader();
+    const objLoader = new THREE.OBJLoader();
+    mtlLoader.load(`${args['mesh_url']}.mtl`, materials => {
+      materials.preload();
+      objLoader.setMaterials(materials);
+      objLoader.load(`${args['mesh_url']}.obj`, mesh => {
+        isPlayable = true;
+        zUp.add(mesh);
+        elapsedTime = 0;
+        // audio.currentTime = 0;
+        update();
+      });
+    });
+
+    const points = args['path'].map(x => {
+      const node = args['connectivity'].find(y => y['image_id'] === x);
+      const point = new THREE.Vector3().setFromMatrixPosition(
+        new THREE.Matrix4().fromArray(node['pose']).transpose());
+      point.z -= node['height'] - 0.1;
+      return point;
+    });
+    const geometry = new THREE.Geometry().setFromPoints(points);
+    zUp.add(new THREE.Points(geometry, new THREE.PointsMaterial({
+      'color': 0xffff00,
+      'size': 0.1,
+    })));
+    zUp.add(new THREE.Line(geometry, new THREE.LineBasicMaterial({
+      'color': 0xffff00,
+    })));
+
+    var elapsedTime = 0;
+
+    function update() {
+      const x = args['pose_trace'].find(x => elapsedTime <= x['time']);
+      if (!x) return;
+
+      camera.matrix.fromArray(x['extrinsic_matrix']).transpose()
+      camera.matrix.decompose(camera.position, camera.quaternion, camera.scale);
+      camera.updateMatrixWorld();
+      camera.projectionMatrix.fromArray(x['intrinsic_matrix']).transpose();
+      camera.projectionMatrixInverse.getInverse(camera.projectionMatrix);
+      renderer.render(scene, camera);
+
+      args['timed_instruction'].forEach((y, j) => {
+        let startTime = y['start_time'];
+        let endTime = y['end_time'];
+        if (!startTime || !endTime) {
+          startTime = args['timed_instruction'][j - 1]['end_time'];
+          endTime = args['timed_instruction'][j + 1]['start_time'];
+        };
+        if (elapsedTime > startTime && elapsedTime < endTime) {
+          y['span'].css('background', 'lightgreen');
+        } else if (elapsedTime > startTime) {
+          y['span'].css('background', 'lightyellow');
+        } else {
+          y['span'].css('background', '');
+        }
+      });
+    }
+
+    let requestId = null;
+    let prevTime = null;
+
+    function animate() {
+      const time = performance.now() * 1e-3;
+      const timeDelta = time - (prevTime || time);
+      elapsedTime += timeDelta;
+      prevTime = time;
+      update();
+
+      requestId = null;
+      play();
+    }
+
+    function play() {
+      if (!requestId) {
+        // audio.play();
+        requestId = requestAnimationFrame(animate)
+      };
+    }
+
+    function pause() {
+      if (requestId) {
+        // Resets the timeDelta increment.
+        prevTime = null;
+        // audio.pause();
+
+        cancelAnimationFrame(requestId);
+        requestId = null;
+      }
+    }
+  }
+
+  main();
+</script>
