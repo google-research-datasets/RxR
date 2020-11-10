@@ -296,6 +296,11 @@ Individual text features can be downloaded via URL: *
 Where `split` is one of: `rxr_train`, `rxr_val_seen`, `rxr_val_unseen`; and
 `language` is one of: `en`, `hi`, `te`.
 
+## Visualizations
+
+To visualize examples of RxR instructions and pose traces, code is provided in
+the [visualizations](visualizations/README.md) subdirectory.
+
 ## Code and Leaderboard
 
 **Coming soon!** We plan to provide:

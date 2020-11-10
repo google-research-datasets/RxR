@@ -1,28 +1,4 @@
-r"""Pose trace visualization setup.
-
-Downloading the data:
-* RxR data (guide annotations and pose traces):
-  https://github.com/google-research-datasets/RxR
-* Matterport3D data (textured meshes):
-  https://niessner.github.io/Matterport/
-* Navigation graphs:
-  https://github.com/peteanderson80/Matterport3DSimulator/tree/master/
-  connectivity
-
-Setting up the visualization:
-
-  pip install absl-py
-  pip install numpy
-
-  python3 setup.py \
-    --data_dir ~/rxr-data/ \
-    --mesh_dir https://storage.googleapis.com/my-bucket/matterport_mesh \
-    --connectivity_dir ~/connectivity/ \
-    --logtostderr
-
-  python3 -m http.server
-
-"""
+r"""Pose trace visualization setup."""
 
 import gzip
 import json
@@ -36,17 +12,17 @@ import numpy as np
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string('data_dir', None,
+flags.DEFINE_string('data_dir', 'rxr_data',
                     'The directory containing RxR data. Directory schema is '
                     'defined: https://github.com/google-research-datasets/RxR. '
                     'Visualizations require the pose traces, but not the text '
                     'features.')
-flags.DEFINE_string('mesh_dir', None,
+flags.DEFINE_string('mesh_dir', 'mp3d',
                     'The directory (or cloud bucket) containing Matterport3D '
                     'textured meshes. Directory schema is defined: '
                     'https://github.com/niessner/Matterport/blob/master/'
                     'data_organization.md')
-flags.DEFINE_string('connectivity_dir', None,
+flags.DEFINE_string('connectivity_dir', 'Matterport3DSimulator/connectivity',
                     'The directory containing the navigation graphs: '
                     'https://github.com/peteanderson80/Matterport3DSimulator/'
                     'tree/master/connectivity')
@@ -61,8 +37,6 @@ flags.DEFINE_string('args_file', './args.json',
                     'The output args JSON used by the visualizations.')
 flags.DEFINE_string('scan_to_mesh_file', './scan_to_mesh.json',
                     'A JSON file mapping Matterport scan IDs to mesh IDs.')
-
-flags.mark_flags_as_required(['data_dir', 'connectivity_dir', 'mesh_dir'])
 
 
 def main(argv):
@@ -110,7 +84,8 @@ def main(argv):
     scan_to_mesh_id = json.load(f)
   mesh_id = scan_to_mesh_id[args['scan']]
   args['mesh_url'] = os.path.join(
-      FLAGS.mesh_dir, args['scan'], mesh_id, mesh_id)
+      FLAGS.mesh_dir, 'v1', 'scans', args['scan'], 'matterport_mesh',
+      mesh_id, mesh_id)
 
   with open(FLAGS.args_file, 'w') as f:
     logging.info('Writing args file: %s', f.name)
