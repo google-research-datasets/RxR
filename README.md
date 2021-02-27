@@ -8,7 +8,7 @@ RxR is 10x larger, multilingual (English, Hindi and Telugu), with longer and
 more variable paths, and it includes and fine-grained visual groundings that
 relate each word to pixels/surfaces in the environment.
 
-![pose_trace](pose_trace.gif) ![instruction_text](text.png)
+![pose_trace](merged-large.gif)
 
 RxR is released as gzipped [JSON Lines](https://jsonlines.org/) and
 [numpy archives](https://numpy.org/doc/stable/reference/generated/numpy.savez.html),
@@ -35,7 +35,7 @@ Bibtex:
 
 ## Dataset Download
 
-To download the full dataset (guide annotations, follower annotations, pose
+To download the full 161GB dataset (guide annotations, follower annotations, pose
 traces, and text features), install the
 [gsutil](https://cloud.google.com/storage/docs/gsutil_install#install) tool and
 run:
@@ -87,7 +87,9 @@ Field descriptions:
 *   `heading`: The initial heading in radians. Following R2R, the heading angle
     is zero facing the y-axis with z-up, and increases by turning right.
 *   `instruction`: The navigation instruction.
-*   `timed_instruction`: A sequence of time-aligned words in the instruction:
+*   `timed_instruction`: A sequence of time-aligned words in the instruction.
+    Note that a small number of words are missing the `start_time` and
+    `end_time` fields.
     *   `word`: The aligned utterance.
     *   `start_time`: The start of the time span, w.r.t. the recording.
     *   `end_time`: The end of the time span, w.r.t. the recording.
@@ -117,10 +119,10 @@ Sample entry:
 
 Guide annotations can be downloaded from these links:
 
-*   [`rxr_train_guide`](https://storage.cloud.google.com/rxr-data/rxr_train_guide.jsonl.gz)
-*   [`rxr_val_seen_guide`](https://storage.cloud.google.com/rxr-data/rxr_val_seen_guide.jsonl.gz)
-*   [`rxr_val_unseen_guide`](https://storage.cloud.google.com/rxr-data/rxr_val_unseen_guide.jsonl.gz)
-*   [`rxr_test_standard`](https://storage.cloud.google.com/rxr-data/rxr_test_standard_public_guide.jsonl.gz)
+*   [`rxr_train_guide` (72.1M)](https://storage.cloud.google.com/rxr-data/rxr_train_guide.jsonl.gz)
+*   [`rxr_val_seen_guide` (12.9M)](https://storage.cloud.google.com/rxr-data/rxr_val_seen_guide.jsonl.gz)
+*   [`rxr_val_unseen_guide` (12M)](https://storage.cloud.google.com/rxr-data/rxr_val_unseen_guide.jsonl.gz)
+*   [`rxr_test_standard` (1.9M)](https://storage.cloud.google.com/rxr-data/rxr_test_standard_public_guide.jsonl.gz)
 
 ### Downloading Follower Annotations
 
@@ -184,9 +186,9 @@ Sample entry:
 
 Follower annotations can be downloaded from these links:
 
-*   [`rxr_train_follower`](https://storage.cloud.google.com/rxr-data/rxr_train_follower.jsonl.gz)
-*   [`rxr_val_seen_follower`](https://storage.cloud.google.com/rxr-data/rxr_val_seen_follower.jsonl.gz)
-*   [`rxr_val_unseen_follower`](https://storage.cloud.google.com/rxr-data/rxr_val_unseen_follower.jsonl.gz)
+*   [`rxr_train_follower` (12.8M)](https://storage.cloud.google.com/rxr-data/rxr_train_follower.jsonl.gz)
+*   [`rxr_val_seen_follower` (1.4M)](https://storage.cloud.google.com/rxr-data/rxr_val_seen_follower.jsonl.gz)
+*   [`rxr_val_unseen_follower` (1.6M)](https://storage.cloud.google.com/rxr-data/rxr_val_unseen_follower.jsonl.gz)
 
 ## Extended Dataset
 
@@ -250,7 +252,7 @@ Note that `image_mask`, `text_mask`, and `feature_weights` are provided solely
 for convenience, as they can be generated from the other pose trace fields and
 the `timed_instruction`.
 
-Download commands:
+Download command (downloads 18.6GB):
 
 ```bash
 gsutil -m cp -R gs://rxr-data/pose_traces .
@@ -284,7 +286,7 @@ Field descriptions:
 *   `tokens`: Sequence of BERT SubWord tokens.
 *   `features`: Features extracted from the last layer of the BERT encoder.
 
-Download commands:
+Download command (downloads 142.5GB):
 
 ```bash
 gsutil -m cp -R gs://rxr-data/text_features .
@@ -301,14 +303,16 @@ Where `split` is one of: `rxr_train`, `rxr_val_seen`, `rxr_val_unseen`; and
 To visualize examples of RxR instructions and pose traces, code is provided in
 the [visualizations](visualizations/README.md) subdirectory.
 
-## Code and Leaderboard
+## Test Server and Leaderboard
 
-**Coming soon!** We plan to provide:
+To benchmark progress on the dataset, we have launched two competitions with
+public leaderboards. See the links for details:
 
--   Visualization code to recreate the figures in the paper,
--   Starter code for training RxR agents in
-    [VALAN](https://github.com/google-research/valan), and
--   A test server and leaderboard to benchmark progress on the dataset.
+- [RxR competition](https://ai.google.com/research/rxr/)
+- [RxR-Habitat competition](https://ai.google.com/research/rxr/habitat)
+
+**Coming soon!** Starter code for training RxR agents in
+[VALAN](https://github.com/google-research/valan).
 
 ## Contact us
 
