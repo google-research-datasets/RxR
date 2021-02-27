@@ -122,7 +122,8 @@ Guide annotations can be downloaded from these links:
 *   [`rxr_train_guide` (72.1M)](https://storage.cloud.google.com/rxr-data/rxr_train_guide.jsonl.gz)
 *   [`rxr_val_seen_guide` (12.9M)](https://storage.cloud.google.com/rxr-data/rxr_val_seen_guide.jsonl.gz)
 *   [`rxr_val_unseen_guide` (12M)](https://storage.cloud.google.com/rxr-data/rxr_val_unseen_guide.jsonl.gz)
-*   [`rxr_test_standard` (1.9M)](https://storage.cloud.google.com/rxr-data/rxr_test_standard_public_guide.jsonl.gz)
+*   [`rxr_test_standard` (1.9M)](https://storage.cloud.google.com/rxr-data/rxr_test_standard_public_guide.jsonl.gz) - used for the [RxR competition](https://ai.google.com/research/rxr/competition?active_tab=leaderboard)
+*   [`rxr_test_challenge` (1.9M)](https://storage.cloud.google.com/rxr-data/rxr_test_challenge_public_guide.jsonl.gz) - used for the [RxR-Habitat competition](https://ai.google.com/research/rxr/habitat?active_tab=leaderboard)
 
 ### Downloading Follower Annotations
 
