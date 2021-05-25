@@ -35,8 +35,8 @@ Bibtex:
 
 ## Dataset Download
 
-To download the full 161GB dataset (guide annotations, follower annotations, pose
-traces, and text features), install the
+To download the full 161GB dataset (guide annotations, follower annotations,
+pose traces, and text features), install the
 [gsutil](https://cloud.google.com/storage/docs/gsutil_install#install) tool and
 run:
 
@@ -122,8 +122,12 @@ Guide annotations can be downloaded from these links:
 *   [`rxr_train_guide` (72.1M)](https://storage.cloud.google.com/rxr-data/rxr_train_guide.jsonl.gz)
 *   [`rxr_val_seen_guide` (12.9M)](https://storage.cloud.google.com/rxr-data/rxr_val_seen_guide.jsonl.gz)
 *   [`rxr_val_unseen_guide` (12M)](https://storage.cloud.google.com/rxr-data/rxr_val_unseen_guide.jsonl.gz)
-*   [`rxr_test_standard` (1.9M)](https://storage.cloud.google.com/rxr-data/rxr_test_standard_public_guide.jsonl.gz) - used for the [RxR competition](https://ai.google.com/research/rxr/competition?active_tab=leaderboard)
-*   [`rxr_test_challenge` (1.9M)](https://storage.cloud.google.com/rxr-data/rxr_test_challenge_public_guide.jsonl.gz) - used for the [RxR-Habitat competition](https://ai.google.com/research/rxr/habitat?active_tab=leaderboard)
+*   [`rxr_test_standard` (1.9M)](https://storage.cloud.google.com/rxr-data/rxr_test_standard_public_guide.jsonl.gz) -
+    used for the
+    [RxR competition](https://ai.google.com/research/rxr/competition?active_tab=leaderboard)
+*   [`rxr_test_challenge` (1.9M)](https://storage.cloud.google.com/rxr-data/rxr_test_challenge_public_guide.jsonl.gz) -
+    used for the
+    [RxR-Habitat competition](https://ai.google.com/research/rxr/habitat?active_tab=leaderboard)
 
 ### Downloading Follower Annotations
 
@@ -312,8 +316,11 @@ public leaderboards. See the links for details:
 - [RxR competition](https://ai.google.com/research/rxr/)
 - [RxR-Habitat competition](https://ai.google.com/research/rxr/habitat)
 
-**Coming soon!** Starter code for training RxR agents in
-[VALAN](https://github.com/google-research/valan).
+## Changelog
+
+-   **2021-05-24**: Updated 7 corrupted `guide_pose_trace.npz` files in `rxr_train`
+    (with instruction ids 105606, 31170, 39104, 63599, 102712, 83073,
+    110502).
 
 ## Contact us
 
