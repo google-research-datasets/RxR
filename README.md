@@ -8,7 +8,7 @@ RxR is 10x larger, multilingual (English, Hindi and Telugu), with longer and
 more variable paths, and it includes and fine-grained visual groundings that
 relate each word to pixels/surfaces in the environment.
 
-![pose_trace](merged-large.gif)
+![pose_trace](merged.gif)
 
 RxR is released as gzipped [JSON Lines](https://jsonlines.org/) and
 [numpy archives](https://numpy.org/doc/stable/reference/generated/numpy.savez.html),
