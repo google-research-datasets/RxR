@@ -36,7 +36,8 @@ Bibtex:
 ## Dataset Download
 
 To download the full 161GB dataset (guide annotations, follower annotations,
-pose traces, and text features), install the
+pose traces, text features, grounded landmarks, and model-generated
+instructions), install the
 [gsutil](https://cloud.google.com/storage/docs/gsutil_install#install) tool and
 run:
 
@@ -303,6 +304,21 @@ Individual text features can be downloaded via URL: *
 Where `split` is one of: `rxr_train`, `rxr_val_seen`, `rxr_val_unseen`; and
 `language` is one of: `en`, `hi`, `te`.
 
+### Downloading Grounded Landmark Data
+
+We include a dataset of 1.1m grounded landmarks annotated on top of RxR
+instructions using weak supervision from text parsers, RxR's pose traces, and a
+multilingual image-text encoder trained on 1.8b images.
+
+For details check the [marky-mT5](marky-mT5/README.md) subdirectory.
+
+### Downloading Model-Generated Instructions for Data Augmentation
+
+We include an additional dataset of 1m model-generated navigation instructions
+describing additional paths sampled from training environments.
+
+For details check the [marky-mT5](marky-mT5/README.md) subdirectory.
+
 ## Visualizations
 
 To visualize examples of RxR instructions and pose traces, code is provided in
@@ -318,9 +334,11 @@ public leaderboards. See the links for details:
 
 ## Changelog
 
--   **2021-05-24**: Updated 7 corrupted `guide_pose_trace.npz` files in `rxr_train`
-    (with instruction ids 105606, 31170, 39104, 63599, 102712, 83073,
-    110502).
+-   **2022-03-28**: Added grounded landmark data and model-generated
+    instructions in the [marky-mT5](marky-mT5/README.md) subdirectory.
+-   **2021-05-24**: Updated 7 corrupted `guide_pose_trace.npz` files in
+    `rxr_train` (with instruction ids 105606, 31170, 39104, 63599, 102712,
+    83073, 110502).
 
 ## Contact us
 
