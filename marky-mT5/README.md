@@ -19,7 +19,7 @@ The data is released as gzipped [JSON Lines](https://jsonlines.org/), and can be
 downloaded from the links below.
 #### Silver Landmark Data
 Using text parsers, weak supervision from RxR's pose traces, and a multilingual
-image-text encoder trained on 1.8b images, we identify 1.1m English, Hindi and
+image-text encoder trained on 1.8b images, we identify 971k English, Hindi and
 Telugu landmark descriptions in RxR instructions and ground them to specific
 regions in panoramas.
 *   [`rxr_landmarks_train_guide` (63M)](https://storage.cloud.google.com/rxr-data/rxr_landmarks_train_guide.jsonl.gz)

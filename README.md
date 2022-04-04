@@ -334,6 +334,8 @@ public leaderboards. See the links for details:
 
 ## Changelog
 
+-   **2022-04-04**: Updated grounded landmark data in the [marky-mT5](marky-mT5/README.md)
+    subdirectory to include 58 additional grounded instructions.
 -   **2022-03-28**: Added grounded landmark data and model-generated
     instructions in the [marky-mT5](marky-mT5/README.md) subdirectory.
 -   **2021-05-24**: Updated 7 corrupted `guide_pose_trace.npz` files in
