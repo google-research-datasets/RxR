@@ -220,7 +220,7 @@ Data schema:
  'extrinsic_matrix': (np.float32, [n, 16]),
  'intrinsic_matrix': (np.float32, [n, 16]),
  'image_mask': (np.bool, [k, 128, 256]),
- 'text_mask': (np.bool, [k, m]),
+ 'text_masks': (np.bool, [k, m]),
  'feature_weights': (np.float32, [k, 36])}
 ```
 
@@ -247,7 +247,7 @@ Field descriptions:
 *   `image_mask`: Mask indicating the pixels observed in the panorama. This mask
     is in equirectangular format, with heading angle 0 being the center of the
     image.
-*   `text_mask`: Mask indicating the utterances that have been spoken or heard
+*   `text_masks`: Mask indicating the utterances that have been spoken or heard
     by the guide or follower, respectively, at this panoramic viewpoint.
 *   `feature_weights`: An `image_mask` in feature space, corresponding to the
     typical setting in which 36 image features are generated at 12 heading and 3
